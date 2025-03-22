@@ -1,5 +1,4 @@
-import { Button } from "@/shared/components/ui/button";
-import { Card, CardTitle } from "@/shared/components/ui/card";
+import { GamesList } from "@/features/games-list/server";
 import { prisma } from "@/shared/lib/db";
 
 export default async function Home() {
@@ -8,13 +7,9 @@ export default async function Home() {
   console.log(games);
 
   return (
-    <div className="flex items-center justify-center ">
-      <Button>111111</Button>
-      {games.map((game) => (
-        <Card key={game.id}>
-          <CardTitle>{game.name}</CardTitle>
-        </Card>
-      ))}
+    <div className="flex flex-col gap-4  p-10">
+      <h1 className="text-4xl">Игры</h1>
+      <GamesList />
     </div>
   );
 }

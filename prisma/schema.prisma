@@ -14,11 +14,12 @@ datasource db {
 }
 
 model Game {
-  id        String      @id @default(cuid())
-  status    GameStatus
-  players   User[]      @relation("players")
-  winner    User?       @relation(fields: [winnerId], references: [id])
-  winnerId  String
+  id         String      @id @default(cuid())
+  status     GameStatus
+  players    User[]      @relation("players")
+  winner     User?       @relation(fields: [winnerId], references: [id])
+  field      Json
+  winnerId   String?
   gameOverAt String
 }
 

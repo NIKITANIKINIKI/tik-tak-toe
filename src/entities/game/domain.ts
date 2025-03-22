@@ -1,33 +1,36 @@
-export type GameEntry = GameIdleEntry | GameInProgressEntry | GameOverEntry | GameOverDrawEntry
+export type GameEntry =
+  | GameIdleEntry
+  | GameInProgressEntry
+  | GameOverEntry
+  | GameOverDrawEntry;
 
 export type GameIdleEntry = {
   id: string;
   creator: Player;
-  type: "idle";
+  status: "idle";
 };
 
 export type GameInProgressEntry = {
   id: string;
   players: Player[];
-  field: Field
-  type: "inProgress";
+  field: Field;
+  status: "inProgress";
 };
 
 export type GameOverEntry = {
   id: string;
   players: Player[];
-  field: Field[]
-  type: "gameOver";
-  winner: Player
+  field: Field;
+  status: "gameOver";
+  winner: Player;
 };
 
 export type GameOverDrawEntry = {
-    id: string;
-    players: Player[];
-    field: Field[]
-    type: "gameOverDraw";
-    winner: Player
-  };
+  id: string;
+  players: Player[];
+  field: Field;
+  status: "gameOverDraw";
+};
 
 export type Player = {
   id: string;
@@ -37,4 +40,4 @@ export type Player = {
 
 export type Field = Cell[];
 export type Cell = GameSymbol | null;
-export type GameSymbol= string
+export type GameSymbol = string;
