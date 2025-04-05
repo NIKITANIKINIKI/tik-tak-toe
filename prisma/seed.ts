@@ -16,30 +16,7 @@ async function main() {
       rating: 100
     }
   })
-  await prisma.game.create({
-    data:{
-      field: Array(9).fill(null),
-      status: 'idle',
-      gameOverAt: '2882828',
-      players: {
-        connect:{
-          id: user.id,
-        }
-      }
-    }
-  })
-  await prisma.game.create({
-    data:{
-      field: Array(9).fill(null),
-      status: 'idle',
-      gameOverAt: '2882828',
-      players: {
-        connect:{
-          id: user2.id,
-        }
-      }
-    }
-  })
+ 
 }
 main()
   .then(async () => {

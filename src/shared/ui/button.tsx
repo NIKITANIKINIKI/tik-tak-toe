@@ -52,20 +52,23 @@ function Button({
   const Comp = asChild ? Slot : "button";
 
   return (
+    <div >
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
       {children}
-      {result &&
-        matchEither(result, {
-          right: () => null,
-          left: (e) => (
-            <div className="absolute left-[-20px] top-[calc(100%_+_4px)] text-red-500">{e}</div>
-          ),
-        })}
+      
     </Comp>
+    {result &&
+      matchEither(result, {
+        right: () => null,
+        left: (e) => (
+          <div className=" text-red-500 w-[100px] break-words">{e}</div>
+        ),
+      })}
+      </div>
   );
 }
 
