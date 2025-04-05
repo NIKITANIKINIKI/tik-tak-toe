@@ -7,6 +7,7 @@ export type GameEntry =
 export type GameIdleEntry = {
   id: string;
   creator: Player;
+  field: Field;
   status: "idle";
 };
 

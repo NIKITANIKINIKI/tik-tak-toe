@@ -8,7 +8,6 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-4  p-10">
-      <h1 className="text-4xl">Игры</h1>
       <GamesList />
     </div>
   );

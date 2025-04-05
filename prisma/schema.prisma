@@ -18,9 +18,9 @@ model Game {
   status     GameStatus
   players    User[]      @relation("players")
   winner     User?       @relation(fields: [winnerId], references: [id])
-  field      Json
+  field      Json?
   winnerId   String?
-  gameOverAt String
+  gameOverAt String?
 }
 
 enum GameStatus {

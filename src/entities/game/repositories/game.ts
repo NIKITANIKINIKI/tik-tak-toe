@@ -1,7 +1,4 @@
-import {
-  GameIdleEntry,
-  GameOverEntry,
-} from "./../domain";
+import { GameIdleEntry, GameOverEntry } from "./../domain";
 import { prisma } from "@/shared/lib/db";
 import { GameEntry } from "../domain";
 import { Game, Prisma, User } from "@prisma/client";
@@ -20,6 +17,28 @@ async function gamesList(where?: Prisma.GameWhereInput): Promise<GameEntry[]> {
   return games.map(dbGameToGameEntry);
 }
 
+async function createGame(game: GameIdleEntry): Promise<GameEntry> {
+  const createdGame = await prisma.game.create({
+    data: {
+      status: game.status,
+      id: game.id,
+      field: game.field,
+      players: {
+        connect: {
+          id: game.creator.id,
+        },
+      },
+      gameOverAt: '',
+    },
+    include: {
+      players: true,
+      winner: true,
+    },
+  });
+
+  return dbGameToGameEntry(createdGame);
+}
+
 const fieldSchema = z.array(z.union([z.string(), z.null()]));
 
 function dbGameToGameEntry(
@@ -29,13 +48,14 @@ function dbGameToGameEntry(
   }
 ): GameEntry {
   const players = game.players.map(removePassword);
-  const [creator]=players
+  const [creator] = players;
   switch (game.status) {
     case "idle": {
       return {
         id: game.id,
         creator: creator,
         status: game.status,
+        field: fieldSchema.parse(game.field)
       } satisfies GameIdleEntry;
     }
     case "inProgress":
@@ -66,4 +86,5 @@ function dbGameToGameEntry(
 
 export const gameRepository = {
   gamesList,
+  createGame
 };

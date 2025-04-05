@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Game" ALTER COLUMN "gameOverAt" DROP NOT NULL,
+ALTER COLUMN "field" DROP NOT NULL;
