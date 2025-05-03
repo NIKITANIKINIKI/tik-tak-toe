@@ -51,16 +51,16 @@ import 'server-only'
 import { redirect } from "next/navigation";
 import { routes } from "@/kernel/routes";
  
- 
-const verifySession = async () => {
-  const cookie = (await cookies()).get('session')?.value
+const getSessionCookies=() => cookies().then((c) => c.get('session')?.value)
+const verifySession = async (getCookies = getSessionCookies) => {
+  const cookie = await getCookies()
   const session = await decrypt(cookie)
  
   if (session.type==='left') {
     redirect(routes.signIn())
   }
  
-  return { isAuth: true, value: session.value }
+  return { isAuth: true, session: session.value }
 }
 
 export const sessionService = { addSession, deleteSession, verifySession };
