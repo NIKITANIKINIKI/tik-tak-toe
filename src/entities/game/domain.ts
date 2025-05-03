@@ -1,3 +1,5 @@
+import { GameId, UserId } from "@/kernel/ids";
+
 export type GameEntry =
   | GameIdleEntry
   | GameInProgressEntry
@@ -5,21 +7,21 @@ export type GameEntry =
   | GameOverDrawEntry;
 
 export type GameIdleEntry = {
-  id: string;
+  id: GameId;
   creator: Player;
   field: Field;
   status: "idle";
 };
 
 export type GameInProgressEntry = {
-  id: string;
+  id: GameId;
   players: Player[];
   field: Field;
   status: "inProgress";
 };
 
 export type GameOverEntry = {
-  id: string;
+  id: GameId;
   players: Player[];
   field: Field;
   status: "gameOver";
@@ -27,14 +29,14 @@ export type GameOverEntry = {
 };
 
 export type GameOverDrawEntry = {
-  id: string;
+  id: GameId;
   players: Player[];
   field: Field;
   status: "gameOverDraw";
 };
 
 export type Player = {
-  id: string;
+  id: UserId;
   login: string;
   rating: number;
 };

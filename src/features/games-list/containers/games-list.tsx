@@ -8,6 +8,7 @@ export async function GamesList() {
 
   return (
     <Layout
+    label='Игры '
     actions={<CreateButton/>}
     >
       {games.map((game) => (

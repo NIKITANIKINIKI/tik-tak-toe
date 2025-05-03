@@ -52,23 +52,24 @@ function Button({
   const Comp = asChild ? Slot : "button";
 
   return (
-    <div >
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    >
-      {children}
-      
-    </Comp>
-    {result &&
-      matchEither(result, {
-        right: () => null,
-        left: (e) => (
-          <div className=" text-red-500 w-[100px] break-words">{e}</div>
-        ),
-      })}
+    <div className="flex justify-end flex-col">
+      <div className="flex justify-end">
+        <Comp
+          data-slot="button"
+          className={cn(buttonVariants({ variant, size, className }))}
+          {...props}
+        >
+          {children}
+        </Comp>
       </div>
+      <div className="h-5">
+        {result &&
+          matchEither(result, {
+            right: () => null,
+            left: (e) => <div className=" text-red-500 ">{e}</div>,
+          })}
+      </div>
+    </div>
   );
 }
 
