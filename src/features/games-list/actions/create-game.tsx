@@ -1,6 +1,6 @@
 "use server";
 
-import { createGame } from "@/entities/game";
+import { createGame } from "@/entities/game/server";
 import { getCurrentUser } from "@/entities/user";
 import { left, right } from "@/shared/lib/either";
 import { redirect } from "next/navigation";

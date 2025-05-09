@@ -5,6 +5,11 @@ import { Game, Prisma, User } from "@prisma/client";
 import { z } from "zod";
 import { removePassword } from "@/shared/lib/password";
 
+const gameInclude = {
+  winner: { include: { user: true } },
+  players: { include: { user: true } },
+};
+
 async function gamesList(where?: Prisma.GameWhereInput): Promise<GameEntry[]> {
   const games = await prisma.game.findMany({
     where,
@@ -28,7 +33,7 @@ async function createGame(game: GameIdleEntry): Promise<GameEntry> {
           id: game.creator.id,
         },
       },
-      gameOverAt: '',
+      gameOverAt: "",
     },
     include: {
       players: true,
@@ -37,6 +42,22 @@ async function createGame(game: GameIdleEntry): Promise<GameEntry> {
   });
 
   return dbGameToGameEntry(createdGame);
+}
+
+async function getGame(where?: Prisma.GameWhereInput) {
+  const game = await prisma.game.findFirst({
+    where,
+    include: {
+      players: true,
+      winner: true,
+    },
+  });
+
+  if (game) {
+    return dbGameToGameEntry(game);
+  }
+
+  return undefined;
 }
 
 const fieldSchema = z.array(z.union([z.string(), z.null()]));
@@ -55,7 +76,7 @@ function dbGameToGameEntry(
         id: game.id,
         creator: creator,
         status: game.status,
-        field: fieldSchema.parse(game.field)
+        field: fieldSchema.parse(game.field),
       } satisfies GameIdleEntry;
     }
     case "inProgress":
@@ -86,5 +107,6 @@ function dbGameToGameEntry(
 
 export const gameRepository = {
   gamesList,
-  createGame
+  createGame,
+  getGame
 };
