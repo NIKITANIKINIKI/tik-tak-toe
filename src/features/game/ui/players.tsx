@@ -10,10 +10,9 @@ export function Players({ game }: { game: GameEntry }) {
         X - {firstPlayer.login}: {firstPlayer.rating}
       </div>
       <div>
-        |
         {secondPlayer?.login && (
           <>
-            O - {secondPlayer.login}:{secondPlayer.rating}
+            | O - {secondPlayer.login}:{secondPlayer.rating}
           </>
         )}
       </div>
