@@ -14,7 +14,7 @@ export function Fields({ fields }: { fields: Cell[] }) {
           <div
             key={el.id}
             className={` flex justify-center items-center text-[35px] w-[100px] h-[100px] border border-purple-500 text-[25px] ${
-              el === null
+              el.field === null
                 ? "cursor-pointer hover:bg-purple-500 transition transform hover:scale-110 hover:rounded-lg"
                 : ""
             }`}
