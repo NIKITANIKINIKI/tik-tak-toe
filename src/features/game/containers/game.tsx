@@ -1,9 +1,6 @@
 import { getGame } from "@/entities/game/server";
-import { GameLayout } from "../ui/layout";
-import { Status } from "../ui/status";
 import { redirect } from "next/navigation";
-import { Fields } from "../ui/fields";
-import { Players } from "../ui/players";
+import { GameClient } from "./game-client";
 
 export async function Game({ gameId }: { gameId: string }) {
   const game = await getGame(gameId);
@@ -32,11 +29,5 @@ export async function Game({ gameId }: { gameId: string }) {
   //     field: ['O', 'X', null, null, null, null, null, null, null]
   //   }
 
-  return (
-    <GameLayout
-      players={<Players game={game} />}
-      status={<Status game={game} />}
-      fields={<Fields fields={game.field} />}
-    />
-  );
+  return <GameClient defaultStateGame={game} />;
 }
