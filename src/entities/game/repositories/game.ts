@@ -1,4 +1,4 @@
-import { GameIdleEntry, GameOverEntry } from "./../domain";
+import { GameIdleEntry, GameOverEntry, Player } from "./../domain";
 import { prisma } from "@/shared/lib/db";
 import { GameEntry } from "../domain";
 import { Game, Prisma, User } from "@prisma/client";
@@ -60,6 +60,20 @@ async function getGame(where?: Prisma.GameWhereInput) {
   return undefined;
 }
 
+async function startGame(gameId: string, player: Player) {
+  await prisma.game.update({
+    where: { id: gameId},
+    data:{
+      players: {
+        connect: {
+          id: player.id
+        }
+      },
+      status: 'inProgress'
+    }
+  })
+}
+
 const fieldSchema = z.array(z.union([z.string(), z.null()]));
 
 function dbGameToGameEntry(
@@ -108,5 +122,6 @@ function dbGameToGameEntry(
 export const gameRepository = {
   gamesList,
   createGame,
-  getGame
+  getGame,
+  startGame
 };

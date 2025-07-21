@@ -1,5 +1,4 @@
 import { Label } from "@/shared/ui/label";
-import { PropsWithChildren } from "react";
 
 export function Layout({
   children,
@@ -13,10 +12,10 @@ export function Layout({
   return (
     <>
       <div className="flex flex-row items-center justify-between items-center">
-        <Label  className="text-[26px]">{label}</Label>
+        <Label className="text-[26px]">{label}</Label>
         {actions}
       </div>
-      <div className=" grid grid-cols-2 gap-4">{children}</div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 ">{children}</div>
     </>
   );
 }

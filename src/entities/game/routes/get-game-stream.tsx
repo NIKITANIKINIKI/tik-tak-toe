@@ -1,7 +1,8 @@
 import { getCurrentUser } from "@/entities/user";
 import { NextRequest } from "next/server";
-import { getGame } from "../server";
+import { getGame, getIdleGames } from "../server";
 import { sseStream } from "@/shared/lib/sse/server";
+import { gameEvents } from "@/features/game/server";
 
 export async function getGameStream(
   req: NextRequest,
@@ -17,9 +18,9 @@ export async function getGameStream(
 
   const { addClose, response, write } = sseStream(req);
 
-//   const interval = setInterval(() => write(game));
+  write(game);
 
-//   addClose(() => clearInterval(interval));
+  addClose(await gameEvents.addGameCreated(() => write(game)));
 
   return response;
 }

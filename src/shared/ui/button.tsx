@@ -56,7 +56,7 @@ function Button({
       <div className="flex justify-end">
         <Comp
           data-slot="button"
-          className={cn(buttonVariants({ variant, size, className }))}
+          className={cn(buttonVariants({ variant, size, className }), 'hover:scale-105')}
           {...props}
         >
           {children}

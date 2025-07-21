@@ -14,6 +14,7 @@ export async function GamesList() {
       {games.map((game) => (
         <GameCard
           key={game.id}
+          gameId={game.id}
           login={game.creator.login}
           rating={game.creator.rating}
         />
