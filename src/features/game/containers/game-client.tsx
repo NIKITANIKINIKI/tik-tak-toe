@@ -9,17 +9,20 @@ import { useEventSource } from "@/shared/lib/sse/client";
 import { redirect } from "next/navigation";
 import { routes } from "@/kernel/routes";
 import { Loader } from "@/shared/components/loader";
+import { GameId } from "@/kernel/ids";
 
 export function GameClient({
   defaultStateGame,
+  gameId,
 }: {
   defaultStateGame: GameEntry;
+  gameId: GameId;
 }) {
   const {
     data: game = defaultStateGame,
     isLoading,
     isError,
-  } = useEventSource<GameEntry>("/game/stream");
+  } = useEventSource<GameEntry>(`/game/${gameId}/stream`);
 
   if (isError) {
     redirect(routes.home());

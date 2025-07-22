@@ -2,8 +2,10 @@ import { left, right } from "@/shared/lib/either";
 import { GameIdleEntry, Player } from "../domain";
 import { gameRepository } from "../repositories/game";
 import cuid from "cuid";
+import { gameEvents } from "@/features/game/server";
 
 export async function createGame(player: Player) {
+  console.log("[createGame] Called with player:", player);
   const playerGames = await gameRepository.gamesList({
     players: { some: { id: player.id } },
     status: "idle",
@@ -22,6 +24,12 @@ export async function createGame(player: Player) {
     creator: player,
     status: "idle",
     field: Array(9).fill(null),
+  });
+
+  console.log("[createGame] Created game:", game);
+
+  await gameEvents.emit({
+    type: "game-created",
   });
 
   return right(game);

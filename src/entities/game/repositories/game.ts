@@ -61,7 +61,7 @@ async function getGame(where?: Prisma.GameWhereInput) {
 }
 
 async function startGame(gameId: string, player: Player) {
-  await prisma.game.update({
+  const game = await prisma.game.update({
     where: { id: gameId},
     data:{
       players: {
@@ -70,8 +70,13 @@ async function startGame(gameId: string, player: Player) {
         }
       },
       status: 'inProgress'
+    },
+    include:{
+      players: true
     }
   })
+
+  return dbGameToGameEntry(game)
 }
 
 const fieldSchema = z.array(z.union([z.string(), z.null()]));

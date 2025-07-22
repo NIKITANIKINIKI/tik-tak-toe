@@ -11,7 +11,7 @@ export function GameLayout({
   fields: ReactNode;
 }) {
   return (
-    <Card>
+    <Card className="mt-24">
       <CardHeader className="border-b-[1px] border-gray-500">
         <CardTitle className="text-[28px] text-center ">
           Super game with X and O

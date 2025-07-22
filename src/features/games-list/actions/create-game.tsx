@@ -12,9 +12,11 @@ export const createGameAction = async () => {
     return left("user-not-found" as const);
   }
 
-  const gameResult = await createGame(user);
+  console.log('user - created game action', user)
 
-  if (gameResult.type == "right") redirect(`/game/${gameResult.value.id}`);
+  const game = await createGame(user);
 
-  return gameResult;
+  if (game.type == "right") redirect(`/game/${game.value.id}`);
+
+  return game;
 };
