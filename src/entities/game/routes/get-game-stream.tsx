@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/entities/user";
 import { NextRequest } from "next/server";
-import { getGame } from "../server";
+import { autoVictory, getGame } from "../server";
 import { sseStream } from "@/shared/lib/sse/server";
 import { gameEvents } from "@/features/game/server";
 
@@ -21,12 +21,15 @@ export async function getGameStream(
   console.log("Initial game write:", game);
   write(game);
 
-  addClose(
-    await gameEvents.addGameChanged(game.id, (event) => {
-      console.log("Game changed event received:", event);
-      write(event.data);
-    })
-  );
+  const turnOff = await gameEvents.addGameChanged(game.id, (event) => {
+    console.log("Game changed event received:", event);
+    write(event.data);
+  });
+
+  addClose(async () => {
+    await autoVictory(id, user)
+    turnOff();
+  });
 
   return response;
 }
