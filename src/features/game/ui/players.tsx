@@ -7,12 +7,12 @@ export function Players({ game }: { game: GameEntry }) {
   return (
     <div className="flex justify-center gap-2 text-[20px]">
       <div>
-        X - {firstPlayer.login}: {firstPlayer.rating}
+        O - {firstPlayer.login}: {firstPlayer.rating}
       </div>
       <div>
         {secondPlayer?.login && (
           <>
-            | O - {secondPlayer.login}:{secondPlayer.rating}
+            | X - {secondPlayer.login}:{secondPlayer.rating}
           </>
         )}
       </div>

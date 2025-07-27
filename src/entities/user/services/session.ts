@@ -47,7 +47,6 @@ async function deleteSession() {
   cookieStore.delete("session");
 }
 
-import 'server-only'
 import { redirect } from "next/navigation";
 import { routes } from "@/kernel/routes";
  
